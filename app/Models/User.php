@@ -41,4 +41,21 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+
+    public function settings()
+    {
+        return $this->hasOne(UserSetting::class);
+    }
+
+    public function workWeeks()
+    {
+        return $this->hasMany(WorkWeek::class);
+    }
+
+    // Método para inicializar settings si no existen
+    public function getSettingsAttribute()
+    {
+        return $this->settings()->firstOrCreate();
+    }
 }
